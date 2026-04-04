@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-space-grotesk: 'Space Grotesk', sans-serif;
+  --font-inter:         'Inter', sans-serif;
+  --font-ibm-plex-mono: 'IBM Plex Mono', monospace;
+
+  --bg:          #FAFAF7;
+  --surface:     #FFFFFF;
+  --border:      #E4E3DC;
+  --border-soft: #EEECEA;
+  --ink:         #1A1917;
+  --ink-muted:   #6B6963;
+  --ink-faint:   #A8A49D;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+/* ── Typography utilities ─────────────────────────────── */
+.font-heading { font-family: var(--font-space-grotesk) !important; }
+.font-mono    { font-family: var(--font-ibm-plex-mono) !important; }
+.font-body    { font-family: var(--font-inter) !important; }
+
+/* ── Subtle paper-grain texture on body ──────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Score ring animation ────────────────────────────── */
+.score-ring circle.track {
+  stroke: var(--border);
+  stroke-width: 6;
+  fill: none;
+}
+
+.score-ring circle.fill {
+  stroke-width: 6;
+  fill: none;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Upload drop zone ────────────────────────────────── */
+.drop-zone {
+  border: 1.5px dashed var(--border);
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.drop-zone:hover,
+.drop-zone.drag-over {
+  border-color: #1A1917;
+  background-color: #F4F3EE;
+}
+
+/* ── Shimmer skeleton ────────────────────────────────── */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--border-soft) 0%,
+    #F0EFEA 50%,
+    var(--border-soft) 100%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+
+/* ── Staggered fade-up entries ───────────────────────── */
+.stagger > * {
+  opacity: 0;
+  animation: fadeUp 0.45s ease forwards;
+}
+.stagger > *:nth-child(1)  { animation-delay: 0.05s; }
+.stagger > *:nth-child(2)  { animation-delay: 0.10s; }
+.stagger > *:nth-child(3)  { animation-delay: 0.15s; }
+.stagger > *:nth-child(4)  { animation-delay: 0.20s; }
+.stagger > *:nth-child(5)  { animation-delay: 0.25s; }
+.stagger > *:nth-child(6)  { animation-delay: 0.30s; }
+.stagger > *:nth-child(7)  { animation-delay: 0.35s; }
+.stagger > *:nth-child(8)  { animation-delay: 0.40s; }
+.stagger > *:nth-child(9)  { animation-delay: 0.45s; }
+.stagger > *:nth-child(10) { animation-delay: 0.50s; }
+
+/* ── Scrollbar ───────────────────────────────────────── */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmer {
+  from { background-position: -400px 0; }
+  to   { background-position:  400px 0; }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
